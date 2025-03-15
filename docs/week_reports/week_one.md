@@ -13,4 +13,10 @@ I spent approximately **2 hours** on the project this week.
 The actual program code **has not progressed yet**, but I will start working on it **as soon as possible**.  
 
 ## Learning Outcomes  
-This week, I researched **RSA
+This week, I researched **RSA encryption** and gained a **better understanding of how it works**.  
+
+## Challenges and Uncertainties  
+I currently have **no uncertainties**.  
+
+## Next Steps  
+Next, I will **start writing the program code**.  
