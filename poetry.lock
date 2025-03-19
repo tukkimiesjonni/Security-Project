@@ -83,6 +83,17 @@ test = ["appdirs (==1.4.4)", "covdefaults (>=2.3)", "pytest (>=8.3.2)", "pytest-
 type = ["mypy (>=1.11.2)"]
 
 [[package]]
+name = "pyfiglet"
+version = "1.0.2"
+description = "Pure-python FIGlet implementation"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "pyfiglet-1.0.2-py3-none-any.whl", hash = "sha256:889b351d79c99e50a3f619c8f8e6ffdb27fd8c939fc43ecbd7559bd57d5f93ea"},
+    {file = "pyfiglet-1.0.2.tar.gz", hash = "sha256:758788018ab8faaddc0984e1ea05ff330d3c64be663c513cc1f105f6a3066dab"},
+]
+
+[[package]]
 name = "pylint"
 version = "3.3.5"
 description = "python code static checker"
@@ -177,4 +188,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "f07b7eb3ed718dbd00635d5fb5d7d22a070725d2efb5528c74e6dc8b3ac3750b"
+content-hash = "19156e82dfbaae0fdec1e808395804aafc3f7f53b2699f968126d544282b083f"
