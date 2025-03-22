@@ -1,4 +1,4 @@
-# Week Report 1  
+# Week Report 2
 
 ## Progress This Week  
 - Created functions for **Miller Rabin Algorithm and Sieve of Erastosthenes**  
