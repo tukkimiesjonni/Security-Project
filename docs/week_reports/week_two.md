@@ -17,7 +17,7 @@ Core development is in progress and the key-pair generation algorithm is almost 
 This week, I researched **RSA encryption** and **different algorithms** I need to use in order to create the key-pair. Learned how the RSA keys are generated.
 
 ## Challenges and Uncertainties  
-I have a question if I use external libraries such as **random** to generate random 1024 bit numbers or do I have to write the number generation function myself. Or what is the policy about using external libraries at all such as **math** to generate gcd or lcm, or other things?
+I have a question if I can use external libraries such as **random** to generate random 1024 bit numbers or do I have to write the number generation function myself? Or what is the policy about using external libraries at all such as **math** to generate gcd or lcm, or other things?
 
 ## Next Steps  
 Next, I will **finish up the core code and start working on different functionalities**.  
