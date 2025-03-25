@@ -1,6 +1,7 @@
-"""Importing random to produce random numbers."""
+"""Importing random and math to produce random numbers and to count gcd and lcm."""
 
 import random
+import math
 
 
 def miller_rabin(n: int, k: int):
@@ -28,7 +29,7 @@ def miller_rabin(n: int, k: int):
         for _ in range(s - 1):
             x = pow(x, 2, n)
             if x == n - 1:
-                break  
+                break
             if x == 1:
                 return False
 
@@ -56,3 +57,26 @@ def sieve_of_eratosthenes(n: int):
     return [i for i, is_prime in enumerate(bool_array) if is_prime]
 
 # ***** I think this works *****
+
+def gcd(a, b):
+    """Compute the greatest common divisor (GCD) using Euclidean algorithm."""
+    return math.gcd(a,b)
+
+
+def lcm(a, b):
+    """Compute the least common multiple (LCM)"""
+    return math.lcm(a,b)
+
+
+def prime_factors(n):
+    """Returns the prime factorization of n as a dictionary {p: k}."""
+    i = 2
+    factors = {}
+    while i * i <= n:
+        while n % i == 0:
+            factors[i] = factors.get(i, 0) + 1
+            n //= i
+        i += 1
+    if n > 1:
+        factors[n] = 1
+    return factors
