@@ -38,4 +38,7 @@ class TestKeyGeneration(unittest.TestCase):
         self.assertEqual(gcd(exponent, modulus), 1)
 
     # Might need to test with larger values.
+
+if __name__ == '__main__':
+    unittest.main()
     
