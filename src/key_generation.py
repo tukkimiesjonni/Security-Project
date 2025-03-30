@@ -3,7 +3,7 @@
    to compute required values for generating the keys"""
 
 import random
-from utils import miller_rabin, lcm, gcd, prime_factors
+from src.utils import miller_rabin, lcm, gcd, prime_factors
 
 # Avainparin pitää olla 2048 bittiä pitkä
 # Avain 1024 bittiä pitkä
