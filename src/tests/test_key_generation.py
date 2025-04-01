@@ -1,7 +1,8 @@
 """Import unittest and key_generation functions for testing purposes"""
 import unittest
-from src.utils import miller_rabin, gcd
-from src.key_generation import compute_primes, compute_modulus, carmichael_lambda, compute_public_exponent
+from keys.key_generation import compute_primes, compute_modulus, carmichael_lambda, compute_public_exponent
+from util_functions.utils import miller_rabin, gcd
+
 
 class TestKeyGeneration(unittest.TestCase):
     """Container for tests"""

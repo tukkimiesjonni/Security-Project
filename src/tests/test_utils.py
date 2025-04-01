@@ -1,6 +1,6 @@
 """Import unittest and utils functions for testing purposes"""
 import unittest
-from src.utils import miller_rabin, sieve_of_eratosthenes, gcd, lcm, prime_factors
+from util_functions.utils import miller_rabin, sieve_of_eratosthenes, gcd, lcm, prime_factors
 
 class TestUtils(unittest.TestCase):
     """Container for tests"""
