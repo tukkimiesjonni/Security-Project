@@ -2,7 +2,7 @@
 University of Helsinki Algorithms and AI Project
 
 ## Specification Report
-[Specification Report](https://github.com/tukkimiesjonni/Security-Project/blob/main/docs/specification_report/secification_report.md)
+[Specification Report](https://github.com/tukkimiesjonni/Security-Project/blob/main/docs/specification_report/specification_report.md)
 
 ## Week Reports
 [Week 1](https://github.com/tukkimiesjonni/Security-Project/blob/main/docs/week_reports/week_one.md)

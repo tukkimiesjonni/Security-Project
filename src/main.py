@@ -1,73 +1,76 @@
-"""Importing pyfiglet for nice ASCII art, and other packages for functions"""
+"""Main module for handling the process."""
+
 from crypt.encryption import encrypt
 from crypt.decryption import decrypt
-from keys.key_generation import compute_modulus, compute_primes, compute_private_exponent, compute_public_exponent, carmichael_lambda
+from keys.key_generation import generate_keys
 import pyfiglet
 
 
-def logo():
-    """Function to print logo for the application"""
+def logo() -> str:
+    """Print logo for te terminal app."""
 
-    text = "RSA Machine"
-    figlet = pyfiglet.figlet_format(text, font='slant')
-
-    return figlet
+    return pyfiglet.figlet_format("RSA Machine", font="slant")
 
 
-def main():
-    """Main function to run the terminal application"""
+def display_menu() -> None:
+    """Print the menu to the terminal."""
 
-    print(logo())
-
-    lines = [
+    menu_lines = [
         "|| ** This is a program for encrypting and decrypting messages using RSA",
         "||",
         "|| 1. Encrypt message",
         "|| 2. Decrypt message"
     ]
+    max_length = max(len(line) for line in menu_lines)
 
-    max_length = max(len(line) for line in lines)
-
-    for line in lines:
+    for line in menu_lines:
         print(line.ljust(max_length) + " ||")
-
     print("||".ljust(max_length) + " ||")
 
+
+def main() -> None:
+    """Main loop that handles mode selection and function calls."""
+
+    print(logo())
+    display_menu()
+
+    private_key = None
+
     while True:
-        selection = input("|| ** Please select a mode".ljust(max_length) + " ||\n")
+        selection = input("|| ** Please select a mode: ").strip()
 
         if selection == "1":
-            plaintext_string = input("|| ** Input string to encrypt".ljust(max_length) + " ||\n")
-            bit_length = int(input("|| Input desired bit length".ljust(max_length) + " ||\n"))
-            primes = compute_primes(bit_length)
-            modulus = compute_modulus(primes)
-            carmichael_n = carmichael_lambda(modulus)
-            public_exponent = compute_public_exponent(carmichael_n)
-            private_exponent = compute_private_exponent(public_exponent, carmichael_n)
+            message = input("|| ** Input string to encrypt: ").strip()
+            try:
+                bit_length = int(input("|| Input desired bit length: ").strip())
+            except ValueError:
+                print("|| ** Invalid bit length. Please enter a valid integer.")
+                continue
 
-            print(f"Public Key: (n={carmichael_n}, e={public_exponent})".ljust(max_length) + " ||\n")
-            print(f"Private Key: (n={carmichael_n}, d={private_exponent})".ljust(max_length) + " ||\n")
-            print(f"Plaintext message: {plaintext_string}".ljust(max_length) + " ||\n")
-            encrypted_string = encrypt(plaintext_string, public_exponent, modulus)
-            print(f"Encrypted string: {encrypted_string}")
-            # Insert input string here
-            # Input key bit length
-            # Run encrypting functions
-            # Run key generation functions
-            # Print key
-            # Print encrypted message
+            public_key, private_key = generate_keys(bit_length)
+
+            print(f"Public Key: {public_key}")
+            print(f"Private Key: {private_key}")
+            print(f"Plaintext message: {message}")
+            encrypted = encrypt(message, public_key)
+            print(f"Encrypted string: {encrypted}")
+
         elif selection == "2":
-            string_input = int(input("|| ** Input the encrypted integer: ").strip()) # Doesn't work wihtout strip()???
-            decrypted_message = decrypt(string_input, private_exponent, modulus)
-            print(f"Decrypted: {decrypted_message}")
-            # encrypted_string = input("|| ** Input string to decrypt".ljust(max_length) + " ||\n")
-            # Insert encrypted string
-            # Insert key
-            # Run decrypting functions
-            # Print decrypted string
+            if not private_key:
+                print("|| ** No private key available. Please encrypt a message first.")
+                continue
+
+            try:
+                encrypted_input = int(input("|| ** Input the encrypted string: ").strip())
+            except ValueError:
+                print("|| ** Invalid input. Please enter a numeric ciphertext.")
+                continue
+
+            decrypted = decrypt(encrypted_input, private_key)
+            print(f"Decrypted: {decrypted}")
+
         else:
-            # Bad input, request new input
-            print("|| ** Please enter a valid number".ljust(max_length) + " ||\n")
+            print("|| ** Please enter a valid number (1 or 2).")
 
 
 if __name__ == "__main__":
