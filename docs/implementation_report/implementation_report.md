@@ -60,7 +60,7 @@ Both operations rely on modular exponentiation of integers:
 
 ## 5. Use of Large Language Models
 
-Throughout the project, I used various large language models such as GPT-4o Mini and Microsoft Copilot Chat (powered by GPT-4o) to rewrite documentation in a clearer form, as English is not my first language. This significantly sped up the writing of weekly reports.
+Throughout the project, I used various large language models such as GPT-4o Mini and Microsoft Copilot Chat (powered by GPT-4o) to rewrite documentation in a clearer form, as English is not my first language. This significantly sped up the writing of weekly reports. LLMs were also used in generating docstrings for functions.
 
 ## 6. Sources
 
