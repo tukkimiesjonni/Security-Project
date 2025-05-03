@@ -5,7 +5,7 @@ University of Helsinki Algorithms and AI Project
 [Specification Report](https://github.com/tukkimiesjonni/Security-Project/blob/main/docs/specification_report/specification_report.md)
 
 ## Implementation Report
-[Implementation Report](https://github.com/tukkimiesjonni/Security-Project/blob/main/docs/implementation_report/specification_report.md)
+[Implementation Report](https://github.com/tukkimiesjonni/Security-Project/blob/main/docs/implementation_report/implementation_report.md)
 
 ## Test Report
 [Test Report](https://github.com/tukkimiesjonni/Security-Project/blob/main/docs/test_report/test_report.md)
