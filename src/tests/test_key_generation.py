@@ -1,45 +1,59 @@
-"""Import unittest and key_generation functions for testing purposes"""
-import unittest
-from keys.key_generation import compute_primes, compute_modulus, carmichael_lambda, compute_public_exponent
-from util_functions.utils import miller_rabin, gcd
+"""Unittests for testing key_generation module."""
+
+from keys.key_generation import generate_keys
+import pytest
 
 
-class TestKeyGeneration(unittest.TestCase):
-    """Container for tests"""
+def test_generate_keys_returns_valid_key_structure():
+    """
+    Test that generate_keys returns a properly structured pair of keys.
 
-    def test_compute_primes(self):
-        """Ensure that gcd function returns correct values"""
-        primes = compute_primes(10)
-        self.assertEqual(len(primes), 2)
-        self.assertTrue(miller_rabin(primes[0], 10))
-        self.assertTrue(miller_rabin(primes[1], 10))
-        self.assertNotEqual(primes[0], primes[1])
+    Asserts that the public and private keys are tuples of length 2,
+    and all elements are integers.
+    """
 
+    public_key, private_key = generate_keys(16)
 
-    def test_compute_modulus(self):
-        """Ensure that compute_modulus function returns correct values"""
-        primes = [3, 11]
-        self.assertEqual(compute_modulus(primes), 33)
-
-
-    def test_carmichael_lambda(self):
-        """Ensure that carmichael_lambda function returns correct values"""
-        self.assertEqual(carmichael_lambda(9), 6)
-        self.assertEqual(carmichael_lambda(15), 4)
-        self.assertEqual(carmichael_lambda(21), 6)
-        self.assertEqual(carmichael_lambda(1), 1)
+    assert isinstance(public_key, tuple)
+    assert isinstance(private_key, tuple)
+    assert len(public_key) == 2
+    assert len(private_key) == 2
+    assert all(isinstance(x, int) for x in public_key)
+    assert all(isinstance(x, int) for x in private_key)
 
 
-    def test_compute_public_exponent(self):
-        """Ensure that compute_public_exponent function returns correct values"""
-        modulus = 55
-        exponent = compute_public_exponent(modulus)
-        self.assertGreater(exponent, 1)
-        self.assertLess(exponent, modulus)
-        self.assertEqual(gcd(exponent, modulus), 1)
+def test_public_and_private_keys_match_modulus():
+    """
+    Test that the public and private keys share the same RSA modulus.
 
-    # Might need to test with larger values.
+    The modulus `n` must be identical in both keys for RSA to function correctly.
+    """
 
-if __name__ == '__main__':
-    unittest.main()
-    
+    public_key, private_key = generate_keys(16)
+    _, n1 = public_key
+    _, n2 = private_key
+    assert n1 == n2
+
+
+def test_generate_keys_bit_length_accuracy():
+    """
+    Test that the generated RSA modulus has the correct bit length.
+
+    Allows a ±1 bit tolerance due to binary rounding during prime multiplication.
+    """
+
+    bit_length = 16
+    public_key, _ = generate_keys(bit_length)
+    _, n = public_key
+    assert abs(n.bit_length() - bit_length) <= 1
+
+
+def test_generate_keys_rejects_small_bit_length():
+    """
+    Test that generate_keys raises a ValueError when given a bit length that's too small.
+
+    Ensures that the function enforces a minimum bit length constraint.
+    """
+
+    with pytest.raises(ValueError):
+        generate_keys(4)

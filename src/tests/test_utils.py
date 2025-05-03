@@ -1,59 +1,129 @@
-"""Import unittest and utils functions for testing purposes"""
+"""Unittests for testing utils module."""
+
 import unittest
-from util_functions.utils import miller_rabin, sieve_of_eratosthenes, gcd, lcm, prime_factors
-
-class TestUtils(unittest.TestCase):
-    """Container for tests"""
-
-    def test_gcd(self):
-        """Ensure that gcd function returns correct values"""
-        self.assertEqual(gcd(48, 18), 6)
-        self.assertEqual(gcd(101, 103), 1)
-        self.assertEqual(gcd(56, 98), 14)
-        self.assertEqual(gcd(10, 5), 5)
-        self.assertEqual(gcd(7, 1), 1)
-
-    def test_lcm(self):
-        """Ensure that lcm function returns correct values"""
-        self.assertEqual(lcm(4, 5), 20)
-        self.assertEqual(lcm(6, 8), 24)
-        self.assertEqual(lcm(7, 3), 21)
-        self.assertEqual(lcm(10, 5), 10)
-        self.assertEqual(lcm(1, 1), 1)
+from util_functions.utils import (
+    generate_bit,
+    compute_phi,
+    gen_prime_candidate,
+    miller_rabin,
+    generate_prime,
+    generate_prime_pair
+)
 
 
-    def test_prime_factors(self):
-        """Ensure that prime_factors function returns correct values"""
-        self.assertEqual(prime_factors(60), {2: 2, 3: 1, 5: 1})
-        self.assertEqual(prime_factors(13), {13: 1})
-        self.assertEqual(prime_factors(100), {2: 2, 5: 2})
-        self.assertEqual(prime_factors(1), {})
-        self.assertEqual(prime_factors(37), {37: 1})
-        self.assertEqual(prime_factors(84), {2: 2, 3: 1, 7: 1})
+class TestKeyGenerationUtils(unittest.TestCase):
+    """Unittest class"""
+
+    def test_generate_bit_valid(self):
+        """
+        Test that generate_bit returns a valid integer within the specified bit length.
+
+        Asserts that the generated bit is an integer, its bit length is less than or equal
+        to the specified bit length, and it is greater than or equal to the lower bound
+        for the bit length.
+        """
+
+        bit_length = 16
+        result = generate_bit(bit_length)
+        self.assertIsInstance(result, int)
+        self.assertTrue(result.bit_length() <= bit_length)
+        self.assertGreaterEqual(result, 2 ** (bit_length - 1) + 1)
 
 
-    def test_miller_rabin(self):
-        """Ensure that miller_rabin function returns correct values"""
-        self.assertTrue(miller_rabin(7, 5))
-        self.assertTrue(miller_rabin(13, 5))
-        self.assertTrue(miller_rabin(209669, 5))
-        self.assertTrue(miller_rabin(99999997351, 5))
-        self.assertFalse(miller_rabin(9, 5))
-        self.assertFalse(miller_rabin(100, 5))
-        self.assertFalse(miller_rabin(1, 5))
-        self.assertFalse(miller_rabin(99999997350, 5))
+    def test_generate_bit_invalid_type(self):
+        """
+        Test that generate_bit raises a TypeError when the bit length is not an integer.
+
+        Ensures that the function raises the appropriate error when provided with
+        a non-integer argument.
+        """
+
+        with self.assertRaises(TypeError):
+            generate_bit("16")
 
 
-    def test_sieve_of_erastothenes(self):
-        """Ensure that sieve_of_erastothenes function returns correct values"""
-        self.assertEqual(sieve_of_eratosthenes(10), [2, 3, 5, 7])
-        self.assertEqual(sieve_of_eratosthenes(2), [2])
-        self.assertEqual(sieve_of_eratosthenes(1), [])
-        self.assertEqual(sieve_of_eratosthenes(0), [])
-        self.assertEqual(sieve_of_eratosthenes(30), [2, 3, 5, 7, 11, 13, 17, 19, 23, 29])
+    def test_generate_bit_invalid_value(self):
+        """
+        Test that generate_bit raises a ValueError when the bit length is less than 8.
 
-    # Might need to write tests for larger values also
+        Ensures that the function enforces the constraint that the bit length must
+        be at least 8, raising an appropriate error when violated.
+        """
 
-if __name__ == '__main__':
+        with self.assertRaises(ValueError):
+            generate_bit(4)
+
+
+    def test_compute_phi(self):
+        """
+        Test the computation of Euler's totient function.
+
+        Asserts that the function correctly computes the totient φ(n) for two prime numbers p and q.
+        """
+
+        p, q = 11, 13
+        self.assertEqual(compute_phi(p, q), 120)
+
+
+    def test_gen_prime_candidate_returns_valid_candidate(self):
+        """
+        Test that gen_prime_candidate returns a valid prime candidate.
+
+        Asserts that the generated prime candidate is an integer and falls within
+        the expected range for the specified bit length.
+        """
+
+        bit_length = 16
+        candidate = gen_prime_candidate(bit_length)
+        self.assertIsInstance(candidate, int)
+        self.assertGreaterEqual(candidate, 2 ** (bit_length - 1))
+
+
+    def test_miller_rabin_identifies_composite(self):
+        """
+        Test that the Miller-Rabin primality test correctly identifies a composite number.
+
+        Asserts that the Miller-Rabin test returns False for a known composite number (100).
+        """
+
+        self.assertFalse(miller_rabin(100))
+
+
+    def test_miller_rabin_identifies_prime(self):
+        """
+        Test that the Miller-Rabin primality test correctly identifies a prime number.
+
+        Asserts that the Miller-Rabin test returns True for a known prime number (101).
+        """
+
+        self.assertTrue(miller_rabin(101))
+
+
+    def test_generate_prime_returns_prime(self):
+        """
+        Test that generate_prime returns a prime number.
+
+        Asserts that the function correctly generates a prime number and verifies it
+        with the Miller-Rabin test.
+        """
+
+        prime = generate_prime(16)
+        self.assertTrue(miller_rabin(prime))
+
+
+    def test_generate_prime_pair_valid_output(self):
+        """
+        Test that generate_prime_pair returns valid prime numbers and correct modulus.
+
+        Asserts that the two generated primes are valid, their product matches the expected modulus,
+        and the modulus has the correct bit length.
+        """
+
+        p, q, n = generate_prime_pair(8, 16)
+        self.assertTrue(miller_rabin(p))
+        self.assertTrue(miller_rabin(q))
+        self.assertEqual(n, p * q)
+        self.assertEqual(n.bit_length(), 16)
+
+if __name__ == "__main__":
     unittest.main()
-    
