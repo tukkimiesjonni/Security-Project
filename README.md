@@ -49,10 +49,12 @@ University of Helsinki Algorithms and AI Project
    Inside the project directory, run:  
 
    `poetry install`  
+
    This will install all the necessary dependencies defined in the `pyproject.toml` file.
 
 
 4. **Run the Application**  
+
    To start the RSA terminal application, use:  
 
    `poetry run python3 src/main.py`
