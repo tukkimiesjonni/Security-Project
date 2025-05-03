@@ -7,13 +7,24 @@ import pyfiglet
 
 
 def logo() -> str:
-    """Print logo for te terminal app."""
+    """
+    Generate the ASCII art logo for the RSA terminal application.
+
+    Uses the pyfiglet library to render a stylized banner.
+
+    Returns:
+        str: A string representing the ASCII art title.
+    """
 
     return pyfiglet.figlet_format("RSA Machine", font="slant")
 
 
 def display_menu() -> None:
-    """Print the menu to the terminal."""
+    """
+    Display the main menu for the RSA application in the terminal.
+
+    Prints a formatted list of available options for the user.
+    """
 
     menu_lines = [
         "|| ** This is a program for encrypting and decrypting messages using RSA",
@@ -29,7 +40,17 @@ def display_menu() -> None:
 
 
 def main() -> None:
-    """Main loop that handles mode selection and function calls."""
+    """
+    Run the main loop for the RSA terminal-based encryption application.
+
+    Handles the following user operations:
+    - Displays a banner and menu.
+    - Allows encryption of messages with a generated public key.
+    - Allows decryption of messages using the corresponding private key.
+    - Manages input validation and key lifecycle.
+
+    The loop runs until the user exits the program manually.
+    """
 
     print(logo())
     display_menu()
