@@ -48,7 +48,7 @@ RSA key generation involves creating two large prime numbers, computing a modulu
 ### Encryption & Decryption
 Both operations rely on modular exponentiation of integers:
 
-- **Time Complexity:** O((log n)³) per operation.
+- **Time Complexity:** O((log n)²) per operation.
 - **Space Complexity:** O(1), with the result fitting into standard integer memory due to Python's arbitrary precision.
 
 
