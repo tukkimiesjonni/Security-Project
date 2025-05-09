@@ -23,7 +23,7 @@ def generate_keys(bits: int) -> tuple[tuple[int, int], tuple[int, int]]:
     Raises:
         ValueError: If valid primes satisfying the bit length requirements cannot be generated.
     """
-    
+
     e = 65537
 
     while True:

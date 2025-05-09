@@ -29,6 +29,7 @@ def display_menu() -> None:
     menu_lines = [
         "|| ** This is a program for encrypting and decrypting messages using RSA",
         "||",
+        "|| 0. Exit program",
         "|| 1. Encrypt message",
         "|| 2. Decrypt message"
     ]
@@ -36,7 +37,7 @@ def display_menu() -> None:
 
     for line in menu_lines:
         print(line.ljust(max_length) + " ||")
-    print("||".ljust(max_length) + " ||")
+    print("-" * max_length + "---")
 
 
 def main() -> None:
@@ -58,27 +59,31 @@ def main() -> None:
     private_key = None
 
     while True:
-        selection = input("|| ** Please select a mode: ").strip()
+        selection = input("** Please select a mode: ").strip()
 
         if selection == "1":
-            message = input("|| ** Input string to encrypt: ").strip()
+            message = input("** Input string to encrypt: ").strip()
             try:
-                bit_length = int(input("|| Input desired bit length: ").strip())
+                bit_length = int(input("** Input desired bit length: ").strip())
             except ValueError:
-                print("|| ** Invalid bit length. Please enter a valid integer.")
+                print("** Invalid bit length. Please enter a valid integer.")
                 continue
 
             public_key, private_key = generate_keys(bit_length)
 
+            print("\n" + "-"*72)
             print(f"Public Key: {public_key}")
+            print("-"*72)
             print(f"Private Key: {private_key}")
-            print(f"Plaintext message: {message}")
+            print("-"*72)
+            #print(f"Plaintext message: {message}")
+            #print("-"*72)
             encrypted = encrypt(message, public_key)
             print(f"Encrypted string: {encrypted}")
 
         elif selection == "2":
             if not private_key:
-                print("|| ** No private key available. Please encrypt a message first.")
+                print("|| ** No private key available. Please encrypt a messagmax_lengthe first.")
                 continue
 
             try:
@@ -90,8 +95,11 @@ def main() -> None:
             decrypted = decrypt(encrypted_input, private_key)
             print(f"Decrypted: {decrypted}")
 
+        elif selection == "0":
+            exit()
+
         else:
-            print("|| ** Please enter a valid number (1 or 2).")
+            print("|| ** Please enter a valid number (0, 1 or 2).")
 
 
 if __name__ == "__main__":
