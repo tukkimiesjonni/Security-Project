@@ -34,6 +34,16 @@ def test_public_and_private_keys_match_modulus():
     _, n2 = private_key
     assert n1 == n2
 
+    public_key, private_key = generate_keys(1024)
+    _, n1 = public_key
+    _, n2 = private_key
+    assert n1 == n2
+
+    public_key, private_key = generate_keys(2048)
+    _, n1 = public_key
+    _, n2 = private_key
+    assert n1 == n2
+
 
 def test_generate_keys_bit_length_accuracy():
     """
@@ -43,6 +53,16 @@ def test_generate_keys_bit_length_accuracy():
     """
 
     bit_length = 16
+    public_key, _ = generate_keys(bit_length)
+    _, n = public_key
+    assert abs(n.bit_length() - bit_length) <= 1
+
+    bit_length = 1024
+    public_key, _ = generate_keys(bit_length)
+    _, n = public_key
+    assert abs(n.bit_length() - bit_length) <= 1
+
+    bit_length = 2048
     public_key, _ = generate_keys(bit_length)
     _, n = public_key
     assert abs(n.bit_length() - bit_length) <= 1

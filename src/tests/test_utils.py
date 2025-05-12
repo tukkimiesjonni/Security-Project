@@ -29,6 +29,18 @@ class TestKeyGenerationUtils(unittest.TestCase):
         self.assertTrue(result.bit_length() <= bit_length)
         self.assertGreaterEqual(result, 2 ** (bit_length - 1) + 1)
 
+        bit_length = 1024
+        result = generate_bit(bit_length)
+        self.assertIsInstance(result, int)
+        self.assertTrue(result.bit_length() <= bit_length)
+        self.assertGreaterEqual(result, 2 ** (bit_length - 1) + 1)
+
+        bit_length = 2048
+        result = generate_bit(bit_length)
+        self.assertIsInstance(result, int)
+        self.assertTrue(result.bit_length() <= bit_length)
+        self.assertGreaterEqual(result, 2 ** (bit_length - 1) + 1)
+
 
     def test_generate_bit_invalid_type(self):
         """
@@ -78,6 +90,16 @@ class TestKeyGenerationUtils(unittest.TestCase):
         self.assertIsInstance(candidate, int)
         self.assertGreaterEqual(candidate, 2 ** (bit_length - 1))
 
+        bit_length = 1024
+        candidate = gen_prime_candidate(bit_length)
+        self.assertIsInstance(candidate, int)
+        self.assertGreaterEqual(candidate, 2 ** (bit_length - 1))
+
+        bit_length = 2048
+        candidate = gen_prime_candidate(bit_length)
+        self.assertIsInstance(candidate, int)
+        self.assertGreaterEqual(candidate, 2 ** (bit_length - 1))
+
 
     def test_miller_rabin_identifies_composite(self):
         """
@@ -87,6 +109,7 @@ class TestKeyGenerationUtils(unittest.TestCase):
         """
 
         self.assertFalse(miller_rabin(100))
+        self.assertFalse(miller_rabin(10^308 + 12))
 
 
     def test_miller_rabin_identifies_prime(self):
@@ -97,6 +120,8 @@ class TestKeyGenerationUtils(unittest.TestCase):
         """
 
         self.assertTrue(miller_rabin(101))
+        self.assertTrue(miller_rabin(102765011))
+        self.assertTrue(miller_rabin(102753947249))
 
 
     def test_generate_prime_returns_prime(self):
@@ -108,6 +133,12 @@ class TestKeyGenerationUtils(unittest.TestCase):
         """
 
         prime = generate_prime(16)
+        self.assertTrue(miller_rabin(prime))
+
+        prime = generate_prime(1024)
+        self.assertTrue(miller_rabin(prime))
+
+        prime = generate_prime(2048)
         self.assertTrue(miller_rabin(prime))
 
 
