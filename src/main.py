@@ -2,8 +2,8 @@
 
 from crypt.encryption import encrypt
 from crypt.decryption import decrypt
-from keys.key_generation import generate_keys
 import pyfiglet
+from keys.key_generation import generate_keys
 
 
 def logo() -> str:
@@ -87,7 +87,7 @@ def main() -> None:
                 continue
 
             try:
-                encrypted_input = int(input("|| ** Input the encrypted string: ").strip())
+                encrypted_input = int(input("** Input the encrypted string: ").strip())
             except ValueError:
                 print("|| ** Invalid input. Please enter a numeric ciphertext.")
                 continue
